@@ -31,11 +31,38 @@ function decrireTheme(t) {
   return lignes.join('\n');
 }
 
-function extraireJSON(texte) {
-  const debut = texte.indexOf('{');
-  const fin = texte.lastIndexOf('}');
-  return JSON.parse(texte.slice(debut, fin + 1));
-}
+// L'IA répond via un « outil » : le format JSON est alors garanti propre.
+const CARTE = {
+  type: 'object',
+  properties: {
+    titre: { type: 'string' },
+    texte: { type: 'string' },
+    mot_fort: { type: 'string' },
+  },
+  required: ['titre', 'texte', 'mot_fort'],
+};
+const OUTIL = {
+  name: 'ecrire_lecture',
+  description: "Enregistre la lecture Astro Express : les 3 cartes et les 3 phrases de story.",
+  input_schema: {
+    type: 'object',
+    properties: {
+      message: CARTE,
+      difference: CARTE,
+      mission: CARTE,
+      story: {
+        type: 'object',
+        properties: {
+          message: { type: 'string' },
+          difference: { type: 'string' },
+          mission: { type: 'string' },
+        },
+        required: ['message', 'difference', 'mission'],
+      },
+    },
+    required: ['message', 'difference', 'mission', 'story'],
+  },
+};
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ erreur: 'POST uniquement' });
@@ -61,12 +88,15 @@ module.exports = async (req, res) => {
         max_tokens: 1800,
         system: SYSTEME,
         messages: [{ role: 'user', content: demande }],
+        tools: [OUTIL],
+        tool_choice: { type: 'tool', name: 'ecrire_lecture' },
       }),
     });
     if (!r.ok) throw new Error(`IA indisponible (${r.status}) : ${await r.text()}`);
     const data = await r.json();
-    const texte = data.content.map((b) => b.text || '').join('');
-    const lecture = extraireJSON(texte);
+    const bloc = (data.content || []).find((b) => b.type === 'tool_use');
+    if (!bloc) throw new Error("L'IA n'a pas rendu de lecture");
+    const lecture = bloc.input;
     for (const k of ['message', 'difference', 'mission', 'story']) {
       if (!lecture[k]) throw new Error(`Réponse incomplète : ${k}`);
     }
