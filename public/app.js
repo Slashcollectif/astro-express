@@ -162,10 +162,21 @@
       if (nom) etat.prenom = nom.value;
       setTimeout(deverrouiller, 1200);
     }, true);
-    // Secours si le formulaire Circle s'affiche dans une iframe (envoi non détectable).
-    $('#circle-form-zone').addEventListener('pointerdown', () => {
-      setTimeout(() => $('#secours-porte').classList.remove('cache'), 8000);
-    }, { once: true });
+    // Le formulaire Circle est dans un cadre fermé : on ne voit pas l'envoi.
+    // Dès que la visiteuse clique dedans, on affiche le bouton pour découvrir la suite.
+    const montrerBouton = () => setTimeout(() => $('#secours-porte').classList.remove('cache'), 4000);
+    window.addEventListener('blur', () => {
+      setTimeout(() => { if (document.activeElement && document.activeElement.tagName === 'IFRAME' && $('#circle-form-zone').contains(document.activeElement)) montrerBouton(); }, 0);
+    });
+    // Si Circle prévient la page de l'envoi, on débloque tout seul.
+    window.addEventListener('message', (e) => {
+      let hote = ''; try { hote = new URL(e.origin).hostname; } catch (x) { return; }
+      if (!/circle\.so$/.test(hote)) return;
+      const txt = typeof e.data === 'string' ? e.data : JSON.stringify(e.data || '');
+      if (/submit|success|subscrib|thank/i.test(txt)) setTimeout(deverrouiller, 1500);
+    });
+    // Filet de sécurité : le bouton apparaît de toute façon au bout de 25 s.
+    setTimeout(() => $('#secours-porte').classList.remove('cache'), 25000);
   }
   $('#secours-porte').addEventListener('click', deverrouiller);
 
