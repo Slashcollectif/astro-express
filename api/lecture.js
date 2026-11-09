@@ -64,6 +64,35 @@ const OUTIL = {
   },
 };
 
+async function demanderLecture(demande) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': process.env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: MODELE,
+      max_tokens: 4000,
+      system: SYSTEME,
+      messages: [{ role: 'user', content: demande }],
+      tools: [OUTIL],
+      tool_choice: { type: 'auto' },
+    }),
+  });
+  if (!r.ok) throw new Error(`IA indisponible (${r.status}) : ${await r.text()}`);
+  const data = await r.json();
+  const contenu = data.content || [];
+  const bloc = contenu.find((b) => b.type === 'tool_use' && b.name === 'ecrire_lecture');
+  if (bloc) return bloc.input;
+  // Filet de sécurité : l'IA a répondu en texte, on récupère le JSON.
+  const texte = contenu.map((b) => b.text || '').join('');
+  const a = texte.indexOf('{'), z = texte.lastIndexOf('}');
+  if (a < 0 || z < a) throw new Error("L'IA n'a pas rendu de lecture");
+  return JSON.parse(texte.slice(a, z + 1));
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ erreur: 'POST uniquement' });
   try {
@@ -76,27 +105,11 @@ module.exports = async (req, res) => {
       `Positions du thème de l'entreprise :\n${decrireTheme(theme)}\n\n` +
       `Écris l'Astro Express de cette boîte.`;
 
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: MODELE,
-        max_tokens: 1800,
-        system: SYSTEME,
-        messages: [{ role: 'user', content: demande }],
-        tools: [OUTIL],
-        tool_choice: { type: 'tool', name: 'ecrire_lecture' },
-      }),
-    });
-    if (!r.ok) throw new Error(`IA indisponible (${r.status}) : ${await r.text()}`);
-    const data = await r.json();
-    const bloc = (data.content || []).find((b) => b.type === 'tool_use');
-    if (!bloc) throw new Error("L'IA n'a pas rendu de lecture");
-    const lecture = bloc.input;
+    let lecture = null, derniere = '';
+    for (let essai = 0; essai < 2 && !lecture; essai++) {
+      try { lecture = await demanderLecture(demande); } catch (e) { derniere = e.message; if (/IA indisponible \((400|401|403)\)/.test(e.message)) break; }
+    }
+    if (!lecture) throw new Error(derniere || 'Lecture impossible');
     for (const k of ['message', 'difference', 'mission', 'story']) {
       if (!lecture[k]) throw new Error(`Réponse incomplète : ${k}`);
     }
