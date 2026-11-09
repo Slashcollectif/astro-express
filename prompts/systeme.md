@@ -47,5 +47,4 @@ Les positions calculées du thème de l'entreprise (signes, et maisons si l'heur
 Écris aussi 3 phrases courtes à la première personne, comme si la cliente parlait de sa boîte (12 mots maximum chacune), une par carte. Exemples : « Je parle de la beauté du geste, et je la montre vraiment. » / « Ma différence ? Je donne des ailes, pas des complexes. » / « Ma mission : permettre à mes clientes d'assumer leur identité. »
 
 # Format de réponse
-Réponds UNIQUEMENT avec un JSON valide, sans texte autour :
-{"message":{"titre":"...","texte":"...","mot_fort":"..."},"difference":{"titre":"...","texte":"...","mot_fort":"..."},"mission":{"titre":"...","texte":"...","mot_fort":"..."},"story":{"message":"...","difference":"...","mission":"..."}}
+Rends ta lecture uniquement avec l'outil « ecrire_lecture », un champ par carte. Dans les textes, utilise les guillemets français « » et jamais de guillemets droits.
