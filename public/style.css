@@ -1,0 +1,60 @@
+:root{
+  --creme:#FFF8F2; --brun:#3F231C; --brun-doux:#6B4A40; --rose:#FF7FF2; --rose-pale:#FFE3FB;
+  --orange:#FF600E; --orange-texte:#C2410C; --peche:#FFF0E6; --bord:#E9D3C8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--creme);color:var(--brun);font-family:Montserrat,system-ui,sans-serif}
+.app{max-width:440px;margin:0 auto;padding:24px 22px 48px;min-height:100vh}
+.ecran{display:none;flex-direction:column;gap:18px}
+.ecran.actif{display:flex}
+.cache{display:none !important}
+h1{margin:0;font-size:29px;line-height:1.13;font-weight:800;color:var(--orange)}
+h2{margin:0;font-size:20px;line-height:1.2;font-weight:800}
+p{margin:0;font-size:14px;line-height:1.55}
+.logo{font-size:15px;font-weight:300;letter-spacing:6px}
+.rose{color:var(--rose)}
+.soleil-accueil{align-self:center;width:220px;height:auto}
+.tourne{animation:tourne 12s linear infinite}
+@keyframes tourne{to{transform:rotate(360deg)}}
+.pastille{align-self:flex-start;background:var(--rose-pale);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.promesses{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.45}
+.promesses b{color:var(--orange);margin-right:8px}
+.bouton{display:flex;justify-content:center;align-items:center;min-height:56px;border-radius:999px;border:none;background:var(--rose);color:var(--brun);font:800 16px Montserrat,sans-serif;text-align:center;padding:0 18px;box-shadow:0 6px 0 var(--orange);cursor:pointer;text-decoration:none}
+.bouton:active{transform:translateY(3px);box-shadow:0 3px 0 var(--orange)}
+.bouton.secondaire{background:#fff;border:2px solid var(--rose);box-shadow:0 4px 0 var(--orange);min-height:50px;font-size:15px}
+.bouton[disabled]{opacity:.6;cursor:wait}
+.lien{background:none;border:none;font:600 13px Montserrat,sans-serif;color:var(--brun);text-decoration:underline;cursor:pointer;min-height:44px;line-height:1.5}
+.lien i{font-weight:400;color:var(--brun-doux)}
+.retour{width:44px;height:44px;border-radius:999px;border:none;background:var(--rose-pale);font-size:26px;line-height:1;color:var(--brun);cursor:pointer}
+form{display:flex;flex-direction:column;gap:14px}
+label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700}
+input[type=text],input[type=email],input[type=date],input[type=time]{height:50px;border-radius:14px;border:1.5px solid var(--bord);background:#fff;padding:0 16px;font:500 15px Montserrat,sans-serif;color:var(--brun);width:100%}
+input:focus{outline:2px solid var(--rose);outline-offset:1px}
+.case{flex-direction:row;align-items:center;gap:10px;font-weight:600;min-height:44px}
+.case input{width:20px;height:20px;accent-color:var(--orange)}
+.doux{font-weight:500;color:var(--brun-doux)}
+.aide{background:var(--peche);border-radius:14px;padding:12px 14px;font-size:12px;line-height:1.5;font-weight:400}
+.erreur{color:#B42318;font-weight:600;font-size:13px}
+.petit{font-size:12px;text-align:center;color:var(--brun-doux)}
+.ville-champ{position:relative;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700}
+.ville-champ input.ok{border-color:var(--orange)}
+.ville-champ small{font-weight:600;font-size:12px}
+.ville-liste{position:absolute;left:0;right:0;top:78px;z-index:5;margin:0;padding:0;list-style:none;background:#fff;border:1.5px solid var(--bord);border-radius:14px;box-shadow:0 10px 24px rgba(63,35,28,.12);overflow:hidden}
+.ville-liste button{display:flex;width:100%;min-height:44px;align-items:center;justify-content:space-between;gap:8px;padding:0 16px;border:none;border-bottom:1px solid #F6E7DF;background:#fff;font:700 14px Montserrat,sans-serif;color:var(--brun);text-align:left;cursor:pointer}
+.ville-liste button span{font-weight:500;font-size:12px;color:var(--brun-doux)}
+.surtitre{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.pastilles{display:flex;flex-wrap:wrap;gap:6px}
+.pastilles span{background:var(--rose-pale);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600}
+.carte{background:#fff;border-radius:22px;border:1.5px solid #F3DCD0;padding:20px;display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.carte .num{font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--orange-texte)}
+.carte .mot{align-self:flex-start;background:var(--rose);border-radius:12px;padding:8px 14px;font-weight:800;font-size:16px}
+.flou{filter:blur(5px);user-select:none;pointer-events:none}
+.porte{background:var(--rose-pale);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:12px}
+.guidance{font-size:12px;font-style:italic;text-align:center;color:var(--brun-doux)}
+.carte-vente{background:#fff;border-radius:22px;border:2px solid var(--rose);box-shadow:0 6px 0 var(--orange);padding:22px 20px;display:flex;flex-direction:column;gap:12px;margin:8px 0 26px}
+.carte-vente ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
+.carte-story,.carte-apres{background:var(--peche);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.boutons-story{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.apercu{width:100%;border-radius:16px;box-shadow:0 8px 24px rgba(63,35,28,.18)}
+.rappel{background:#fff;border:1.5px solid #F3DCD0;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.45}
+.rappel b{display:block;font-size:11px;letter-spacing:1.5px;color:var(--orange-texte)}

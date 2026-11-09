@@ -1,0 +1,77 @@
+// POST /api/lecture
+// { marque, activite, theme }  ->  { message, difference, mission, story }
+// L'IA ne calcule rien : elle lit uniquement les positions calculées par /api/theme.
+const fs = require('fs');
+const path = require('path');
+
+const MODELE = process.env.MODELE_IA || 'claude-sonnet-5-5';
+const SYSTEME = fs.readFileSync(path.join(process.cwd(), 'prompts', 'systeme.md'), 'utf8');
+const UTILES = ['soleil', 'mercure', 'uranus', 'neptune', 'noeud_nord', 'chiron'];
+
+function decrireTheme(t) {
+  const lignes = [];
+  const pos = Object.fromEntries(t.planetes.map((p) => [p.cle, p]));
+  for (const cle of UTILES) {
+    const p = pos[cle];
+    let l = `- ${p.nom} en ${p.signe}`;
+    if (p.maison) l += `, maison ${p.maison}`;
+    if (p.a_cheval) l += ` (change de signe ce jour-là : ${p.a_cheval.join(' ou ')}, heure inconnue)`;
+    lignes.push(l);
+  }
+  for (const cible of ['uranus', 'neptune']) {
+    const a = t.aspects.find((x) => (x.a === 'soleil' && x.b === cible) || (x.b === 'soleil' && x.a === cible));
+    lignes.push(a ? `- Soleil en ${a.type} avec ${pos[cible].nom} (orbe ${a.orbe}°)` : `- Aucun aspect majeur entre le Soleil et ${pos[cible].nom}`);
+  }
+  if (t.heure_connue) {
+    lignes.push(`- Ascendant en ${t.ascendant.signe}`);
+    lignes.push(`- MC en ${t.mc.signe}`);
+  } else {
+    lignes.push("- Heure inconnue : pas d'Ascendant, pas de MC, pas de maisons. N'en parle pas.");
+  }
+  return lignes.join('\n');
+}
+
+function extraireJSON(texte) {
+  const debut = texte.indexOf('{');
+  const fin = texte.lastIndexOf('}');
+  return JSON.parse(texte.slice(debut, fin + 1));
+}
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') return res.status(405).json({ erreur: 'POST uniquement' });
+  try {
+    const { marque = '', activite = '', theme } = req.body || {};
+    if (!theme || !theme.planetes) return res.status(400).json({ erreur: 'Thème manquant' });
+
+    const demande =
+      `Marque : ${marque || 'non précisée'}\n` +
+      `Activité : ${activite || 'non précisée'}\n\n` +
+      `Positions du thème de l'entreprise :\n${decrireTheme(theme)}\n\n` +
+      `Écris l'Astro Express de cette boîte.`;
+
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: MODELE,
+        max_tokens: 1800,
+        system: SYSTEME,
+        messages: [{ role: 'user', content: demande }],
+      }),
+    });
+    if (!r.ok) throw new Error(`IA indisponible (${r.status}) : ${await r.text()}`);
+    const data = await r.json();
+    const texte = data.content.map((b) => b.text || '').join('');
+    const lecture = extraireJSON(texte);
+    for (const k of ['message', 'difference', 'mission', 'story']) {
+      if (!lecture[k]) throw new Error(`Réponse incomplète : ${k}`);
+    }
+    res.status(200).json(lecture);
+  } catch (e) {
+    res.status(500).json({ erreur: e.message });
+  }
+};

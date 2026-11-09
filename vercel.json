@@ -1,0 +1,6 @@
+{
+  "functions": {
+    "api/theme.py": { "includeFiles": "ephe/**", "maxDuration": 15 },
+    "api/lecture.js": { "includeFiles": "prompts/**", "maxDuration": 60 }
+  }
+}

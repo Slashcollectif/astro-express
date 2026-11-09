@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astro Express · Slash Collectif</title>
+<meta name="description" content="Découvre ce que ton thème astral a à dire sur ta boîte. Offert.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Noto+Sans+Symbols&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="app">
+
+  <!-- 1 · ACCUEIL -->
+  <section id="ecran-accueil" class="ecran actif">
+    <div class="logo"><span>SLASH</span> <span class="rose">collectif</span></div>
+    <img class="soleil-accueil" src="/assets/soleil-accueil.svg" alt="" width="240" height="240">
+    <span class="pastille">Astro Express · offert</span>
+    <h1>Découvre ce que ton thème astral a à dire sur ta boîte.</h1>
+    <ol class="promesses">
+      <li><b>01</b> Le sujet sur lequel concentrer ta comm pour qu'on ne voie que toi.</li>
+      <li><b>02</b> Ta vraie différence, celle qui fait de toi l'évidence.</li>
+      <li><b>03</b> Ce que tu as à guérir pour vivre pleinement ta mission.</li>
+    </ol>
+    <button class="bouton" data-aller="saisie" data-mode="boite">Je veux mon astro express offert</button>
+    <button class="lien" data-aller="saisie" data-mode="lancement">Je n'ai pas encore d'entreprise<br><i>(tester une date de lancement)</i></button>
+  </section>
+
+  <!-- 2 · SAISIE -->
+  <section id="ecran-saisie" class="ecran">
+    <button class="retour" data-aller="accueil" aria-label="Retour">‹</button>
+    <h1 id="titre-saisie">Parle-moi de la naissance de ta boîte</h1>
+    <p id="intro-lancement" class="cache">Entre la date qui te fait vibrer pour te lancer et découvre l'énergie qu'elle porte. C'est une guidance, pas une science exacte : même un placement qui frotte peut faire partie de ton chemin.</p>
+    <form id="form-saisie" novalidate>
+      <label>Le nom de ta marque
+        <input id="marque" type="text" placeholder="Ex. Slash Collectif" autocomplete="organization">
+      </label>
+      <label><span id="label-date">Date de naissance de ton entreprise</span>
+        <input id="date" type="date" min="1990-01-01" max="2030-12-31" required>
+      </label>
+      <div class="ville-champ">
+        <label for="ville">Ville</label>
+        <input id="ville" type="text" placeholder="Commence à écrire, puis choisis dans la liste" autocomplete="off" required>
+        <ul id="ville-liste" class="ville-liste cache" role="listbox" aria-label="Villes proposées"></ul>
+        <small id="ville-ok" class="cache">✓ Ville trouvée, on a ses coordonnées exactes</small>
+      </div>
+      <label>Heure <span class="doux">(fortement conseillée, précise à la minute près)</span>
+        <input id="heure" type="time">
+      </label>
+      <div class="aide"><b>Besoin d'aide ?</b> Ta boîte est née à quel moment pour toi ? Lors de l'enregistrement, lors de ton 1er post, ta 1ère cliente…<br>Et pour l'heure, check le mail d'enregistrement, un reçu de paiement, une photo prise en envoyant ton dossier. Pas de trace ? Écoute ton intuition, elle est toujours juste.</div>
+      <label class="case"><input id="sans-heure" type="checkbox"> Je n'ai pas l'heure</label>
+      <p id="alerte-heure" class="aide cache">Sans ton heure, tu passes à côté de deux pièces clés : ton Ascendant, là où tu emmènes tes clientes, et ton MC, ce pour quoi tu es faite pour être reconnue. Tu peux continuer maintenant, ou revenir avec ton heure.</p>
+      <label>Ton activité, en quelques mots
+        <input id="activite" type="text" placeholder="Ex. graphiste, kinésiologue, photographe">
+      </label>
+      <p id="erreur-saisie" class="erreur cache" role="alert"></p>
+      <button class="bouton" type="submit">Je révèle mon Astro Express</button>
+    </form>
+  </section>
+
+  <!-- 3 · CHARGEMENT -->
+  <section id="ecran-chargement" class="ecran">
+    <img class="soleil-accueil tourne" src="/assets/soleil-accueil.svg" alt="" width="200" height="200">
+    <h1>Je lis ton thème…</h1>
+    <p>Je calcule tes planètes au degré près, puis je traduis tout ça pour ton activité. Quelques secondes, promis.</p>
+  </section>
+
+  <!-- 4 · RÉSULTAT -->
+  <section id="ecran-resultat" class="ecran">
+    <span class="surtitre">Ton Astro Express</span>
+    <h1 id="res-marque"></h1>
+    <div id="res-pastilles" class="pastilles"></div>
+    <div id="res-cartes"></div>
+
+    <div id="porte" class="porte">
+      <h2>Ta carte 2 et 3 complète ? Ton mail suffit.</h2>
+      <p>Eh oui, je t'apprends déjà le réflexe n°1 : ne jamais laisser filer une occasion de rencontrer une cliente de cœur. Et là, c'est moi qui ai très envie de faire ta connaissance. Promis, je n'envahis pas ta boîte mail.</p>
+      <div id="circle-form-zone">
+        <div data-is-popup="false" data-circle-form-uid="9f8122fb" data-should-show-title="true" data-should-show-subtitle="true" data-should-show-field-labels="true"></div>
+      </div>
+      <button id="secours-porte" class="lien cache" type="button">J'ai bien envoyé mon mail, je découvre la suite</button>
+    </div>
+
+    <p class="guidance">C'est une guidance, pas une science exacte : même un placement qui frotte fait partie de ton chemin.</p>
+
+    <div id="apres-porte" class="cache">
+      <div class="carte-vente">
+        <h2>Et maintenant, ton Astro Business complet :</h2>
+        <ul>
+          <li>Le wording qui fait dire « c'est pour moi » à ta cliente de cœur</li>
+          <li>Ta clientèle cible : qui elle est, la blessure qu'elle porte, ce qu'elle attend de toi</li>
+          <li>Tes couleurs, tes matières, ton style qui portent la vibration de ta boîte</li>
+          <li>Tes actions clés et tes axes stratégiques</li>
+          <li>Le lien avec ton thème personnel, vos complémentarités</li>
+          <li>Et 45 min avec moi pour poser ton plan d'action immédiat</li>
+        </ul>
+        <button class="bouton" data-aller="commande">Je commande mon Astro Business complet</button>
+      </div>
+
+      <div class="carte-story">
+        <h2>Ta story, prête à partager</h2>
+        <p>Ton thème complet en visuel, pour ta story ou ton fond d'écran.</p>
+        <div class="boutons-story">
+          <button class="bouton secondaire" data-story="jour">Version jour</button>
+          <button class="bouton secondaire" data-story="nuit">Version night</button>
+        </div>
+        <img id="apercu-story" class="apercu cache" alt="Aperçu de ta story">
+      </div>
+
+      <div id="apres-story" class="carte-apres cache">
+        <h2>Ta story est prête ! Partage-la et tague @slash.collectif, j'ai trop hâte de la voir.</h2>
+        <p>Et la suite ? Le wording qui fait craquer ta cliente de cœur, les couleurs et les matières qui portent la vibration de ta boîte, tes axes stratégiques, le lien avec ton thème perso… et 45 min avec moi pour poser ton plan d'action immédiat. Tout est dans ton Astro Business complet.</p>
+        <p class="doux">Astuce : dans Instagram, ajoute le sticker « Lien » vers @slash.collectif pour que tes abonnées puissent calculer le leur.</p>
+        <button class="bouton" data-aller="commande">Je commande mon Astro Business complet</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · COMMANDE -->
+  <section id="ecran-commande" class="ecran">
+    <button class="retour" data-aller="resultat" aria-label="Retour">‹</button>
+    <span class="surtitre">Ta commande</span>
+    <h1>Plus que toi, et c'est parti !</h1>
+    <p>Pour croiser ton thème perso avec celui de ta boîte, j'ai besoin de ta naissance à toi. Promis, ça prend 30 secondes.</p>
+    <div id="rappel-boite" class="rappel"></div>
+    <form id="form-commande" novalidate>
+      <label>Ton prénom <input id="cmd-prenom" type="text" autocomplete="given-name" required></label>
+      <label>Ton mail <input id="cmd-email" type="email" placeholder="toi@mamarque.fr" autocomplete="email" required></label>
+      <label>Ta date de naissance <input id="cmd-date" type="date" min="1930-01-01" max="2012-12-31" required></label>
+      <div class="ville-champ">
+        <label for="cmd-ville">Ta ville de naissance</label>
+        <input id="cmd-ville" type="text" placeholder="Commence à écrire, puis choisis dans la liste" autocomplete="off" required>
+        <ul id="cmd-ville-liste" class="ville-liste cache" role="listbox" aria-label="Villes proposées"></ul>
+        <small id="cmd-ville-ok" class="cache">✓ Ville trouvée</small>
+      </div>
+      <label>Ton heure de naissance <span class="doux">(à la minute près si tu l'as)</span> <input id="cmd-heure" type="time"></label>
+      <div class="aide"><b>Ton heure, tu la trouves où ?</b> Sur ton acte de naissance (demande-le en ligne à ta mairie de naissance), ton livret de famille, ou demande à ta maman.</div>
+      <label class="case"><input id="cmd-sans-heure" type="checkbox"> Je ne connais pas mon heure de naissance</label>
+      <p id="erreur-commande" class="erreur cache" role="alert"></p>
+      <button class="bouton" type="submit">Je passe au paiement · 244 € TTC</button>
+      <p class="petit">Payable en plusieurs fois avec Klarna · paiement sécurisé par Stripe</p>
+    </form>
+    <div id="zone-paiement" class="cache">
+      <p><b>C'est noté, merci !</b> Plus qu'une étape : le paiement. Ton rendez-vous de 45 min arrive avec ton PDF.</p>
+      <div id="stripe-zone"></div>
+    </div>
+  </section>
+
+</main>
+<canvas id="toile" width="1080" height="1920" class="cache"></canvas>
+<script src="/app.js"></script>
+</body>
+</html>

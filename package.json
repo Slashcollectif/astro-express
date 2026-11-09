@@ -1,0 +1,8 @@
+{
+  "name": "astro-express",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Astro Express · le thème astral business offert de Slash Collectif",
+  "license": "AGPL-3.0-or-later",
+  "engines": { "node": ">=18" }
+}
