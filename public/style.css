@@ -21,7 +21,7 @@ p{margin:0;font-size:14px;line-height:1.55}
 .promesses b{color:var(--orange);margin-right:8px}
 .bouton{display:flex;justify-content:center;align-items:center;min-height:56px;border-radius:999px;border:none;background:var(--rose);color:var(--brun);font:800 16px Montserrat,sans-serif;text-align:center;padding:0 18px;box-shadow:0 6px 0 var(--orange);cursor:pointer;text-decoration:none}
 .bouton:active{transform:translateY(3px);box-shadow:0 3px 0 var(--orange)}
-.bouton.secondaire{background:#fff;border:2px solid var(--rose);box-shadow:0 4px 0 var(--orange);min-height:50px;font-size:15px}
+.bouton.secondaire{background:var(--rose);border:none;box-shadow:0 4px 0 var(--orange);min-height:50px;font-size:15px}
 .bouton[disabled]{opacity:.6;cursor:wait}
 .lien{background:none;border:none;font:600 13px Montserrat,sans-serif;color:var(--brun);text-decoration:underline;cursor:pointer;min-height:44px;line-height:1.5}
 .lien i{font-weight:400;color:var(--brun-doux)}
@@ -62,3 +62,8 @@ input:focus{outline:2px solid var(--rose);outline-offset:1px}
 #circle-form-zone{background:#fff;border-radius:18px;padding:14px 14px 4px;border:2px solid var(--rose);overflow:hidden}
 #circle-form-zone iframe{width:100%!important;border:0!important;display:block}
 #secours-porte{align-self:stretch}
+
+.carte p{line-height:1.6}
+.carte p strong{font-weight:700;color:var(--brun);background:linear-gradient(transparent 62%,#FFD3FA 62%);padding:0 1px}
+.carte p .respire{display:block;height:10px}
+#aide-porte{text-align:center;margin:4px 0 -4px}
