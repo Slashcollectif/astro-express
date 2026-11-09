@@ -46,5 +46,10 @@ Les positions calculées du thème de l'entreprise (signes, et maisons si l'heur
 # Phrases pour la story
 Écris aussi 3 phrases courtes à la première personne, comme si la cliente parlait de sa boîte (12 mots maximum chacune), une par carte. Exemples : « Je parle de la beauté du geste, et je la montre vraiment. » / « Ma différence ? Je donne des ailes, pas des complexes. » / « Ma mission : permettre à mes clientes d'assumer leur identité. »
 
+# Mise en forme des textes de carte
+- Coupe chaque texte en 2 ou 3 petits paragraphes de 1 à 2 phrases, séparés par une ligne vide.
+- Mets en gras, avec **deux étoiles de chaque côté**, 2 ou 3 expressions clés par texte (jamais une phrase entière). Ce sont les mots qu'elle doit retenir.
+- Pas de gras ni d'étoiles dans les titres, les mots forts et les phrases de story.
+
 # Format de réponse
 Rends ta lecture uniquement avec l'outil « ecrire_lecture », un champ par carte. Dans les textes, utilise les guillemets français « » et jamais de guillemets droits.
