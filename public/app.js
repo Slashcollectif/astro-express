@@ -78,8 +78,9 @@
   /* ---------- API ---------- */
   async function api(url, corps) {
     const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(corps) });
-    const d = await r.json();
-    if (!r.ok) throw new Error(d.erreur || 'Erreur');
+    const brut = await r.text();
+    let d; try { d = JSON.parse(brut); } catch (e) { d = { erreur: brut.slice(0, 160) }; }
+    if (!r.ok) throw new Error(`${url} ${r.status} : ${d.erreur || 'Erreur'}`);
     return d;
   }
 
@@ -107,7 +108,7 @@
       aller('resultat');
     } catch (ex) {
       aller('saisie');
-      err.textContent = "Oups, la lecture n'a pas pu se faire. Réessaie dans un instant.";
+      err.textContent = "Oups, la lecture n'a pas pu se faire. (" + ex.message + ")";
       err.classList.remove('cache');
       console.error(ex);
     }
