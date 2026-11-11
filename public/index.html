@@ -24,6 +24,7 @@
       <li><b>02</b> Ta vraie différence, celle qui fait de toi l'évidence.</li>
       <li><b>03</b> Ce que tu as à guérir pour vivre pleinement ta mission.</li>
     </ol>
+    <p class="cadeau">🎁 <b>En bonus :</b> ton thème en visuel, prêt à poster en story ou à garder en fond d'écran.</p>
     <button class="bouton" data-aller="saisie" data-mode="boite">Je veux mon astro express offert</button>
     <button class="lien" data-aller="saisie" data-mode="lancement">Je n'ai pas encore d'entreprise<br><i>(tester une date de lancement)</i></button>
     <p class="vers-slash"><a href="https://slash-collectif-1708fe.circle.so/linkree-slashinsta" target="_top">← Retour aux liens Slash</a></p>
@@ -34,6 +35,7 @@
     <button class="retour" data-aller="accueil" aria-label="Retour">‹</button>
     <h1 id="titre-saisie">Parle-moi de la naissance de ta boîte</h1>
     <p id="intro-lancement" class="cache">Entre la date qui te fait vibrer pour te lancer et découvre l'énergie qu'elle porte. C'est une guidance, pas une science exacte : même un placement qui frotte peut faire partie de ton chemin.</p>
+    <div id="aide-naissance" class="aide aide-haut"><b>Comment je sais quand ma boîte est née ?</b> Pas de bonne ou de mauvaise réponse, girl : c'est le jour où, pour toi, elle a vraiment existé. L'immatriculation, ton 1er post, ta 1ère cliente, ou ce jour où tu t'es dit « ok, j'y vais ». Garde celui qui te parle le plus, c'est lui qui compte.</div>
     <form id="form-saisie" novalidate>
       <label>Le nom de ta marque
         <input id="marque" type="text" placeholder="Ex. Slash Collectif" autocomplete="organization">
@@ -50,7 +52,7 @@
       <label>Heure <span class="doux">(fortement conseillée, précise à la minute près)</span>
         <input id="heure" type="time">
       </label>
-      <div class="aide"><b>Besoin d'aide ?</b> Ta boîte est née à quel moment pour toi ? Lors de l'enregistrement, lors de ton 1er post, ta 1ère cliente…<br>Et pour l'heure, check le mail d'enregistrement, un reçu de paiement, une photo prise en envoyant ton dossier. Pas de trace ? Écoute ton intuition, elle est toujours juste.</div>
+      <div id="aide-heure" class="aide"><b>Et l'heure, je la trouve où ?</b> Fouille le mail de confirmation, un reçu de paiement, l'heure de ton post ou une photo prise ce jour-là. Pas de trace ? Écoute ton intuition, elle est toujours juste.</div>
       <label class="case"><input id="sans-heure" type="checkbox"> Je n'ai pas l'heure</label>
       <p id="alerte-heure" class="aide cache">Sans ton heure, tu passes à côté de deux pièces clés : ton Ascendant, là où tu emmènes tes clientes, et ton MC, ce pour quoi tu es faite pour être reconnue. Tu peux continuer maintenant, ou revenir avec ton heure.</p>
       <label>Ton activité, en quelques mots
@@ -76,7 +78,7 @@
     <div id="res-cartes"></div>
 
     <div id="porte" class="porte">
-      <h2>Ta carte 2 et 3 complète ? Ton mail suffit.</h2>
+      <h2>Tes cartes 2 et 3 en entier + ton thème en visuel ? Ton mail suffit.</h2>
       <p>Eh oui, je t'apprends déjà le réflexe n°1 : ne jamais laisser filer une occasion de rencontrer une cliente de cœur. Et là, c'est moi qui ai très envie de faire ta connaissance. Promis, je n'envahis pas ta boîte mail.</p>
       <div id="circle-form-zone">
         <div data-is-popup="false" data-circle-form-uid="9f8122fb" data-should-show-title="false" data-should-show-subtitle="false" data-should-show-field-labels="false"></div>
@@ -87,19 +89,6 @@
     <p class="guidance">C'est une guidance, pas une science exacte : même un placement qui frotte fait partie de ton chemin.</p>
 
     <div id="apres-porte" class="cache">
-      <div class="carte-vente">
-        <h2>Et maintenant, ton Astro Business complet :</h2>
-        <ul>
-          <li>Le wording qui fait dire « c'est pour moi » à ta cliente de cœur</li>
-          <li>Ta clientèle cible : qui elle est, la blessure qu'elle porte, ce qu'elle attend de toi</li>
-          <li>Tes couleurs, tes matières, ton style qui portent la vibration de ta boîte</li>
-          <li>Tes actions clés et tes axes stratégiques</li>
-          <li>Le lien avec ton thème personnel, vos complémentarités</li>
-          <li>Et 45 min avec moi pour poser ton plan d'action immédiat</li>
-        </ul>
-        <button class="bouton" data-aller="commande">Je commande mon Astro Business complet</button>
-      </div>
-
       <div class="carte-story">
         <h2>Ta story, prête à partager</h2>
         <p>Ton thème complet en visuel, pour ta story ou ton fond d'écran.</p>
@@ -112,13 +101,23 @@
 
       <div id="apres-story" class="carte-apres cache">
         <h2>Ta story est prête ! Partage-la et tague @slash.collectif, j'ai trop hâte de la voir.</h2>
-        <p>Et la suite ? Le wording qui fait craquer ta cliente de cœur, les couleurs et les matières qui portent la vibration de ta boîte, tes axes stratégiques, le lien avec ton thème perso… et 45 min avec moi pour poser ton plan d'action immédiat. Tout est dans ton Astro Business complet.</p>
         <p class="doux">Astuce : dans Instagram, ajoute le sticker « Lien » vers @slash.collectif pour que tes abonnées puissent calculer le leur.</p>
-        <button class="bouton" data-aller="commande">Je commande mon Astro Business complet</button>
+      </div>
+
+      <div class="carte-vente">
+        <h2>Commande ton thème complet</h2>
+        <p>Ton Astro Business complet, c'est :</p>
+        <ul>
+          <li>Le wording qui fait dire « c'est pour moi » à ta cliente de cœur</li>
+          <li>Ta clientèle cible : qui elle est, la blessure qu'elle porte, ce qu'elle attend de toi</li>
+          <li>Tes couleurs, tes matières, ton style qui portent la vibration de ta boîte</li>
+          <li>Tes actions clés et tes axes stratégiques</li>
+          <li>Le lien avec ton thème personnel, vos complémentarités</li>
+          <li>Et 45 min avec moi pour poser ton plan d'action immédiat</li>
+        </ul>
+        <button class="bouton" data-aller="commande">Go pour une stratégie alignée ✨</button>
       </div>
     </div>
-
-    <p class="vers-slash">Envie de voir tout ce qu'on fait chez Slash, girl ?<br><a href="https://slash-collectif-1708fe.circle.so/linkree-slashinsta" target="_top">Tous nos liens par ici 👉</a></p>
 
     <p class="vers-slash">Envie de voir tout ce qu'on fait chez Slash, girl ?<br><a href="https://slash-collectif-1708fe.circle.so/linkree-slashinsta" target="_top">Tous nos liens par ici 👉</a></p>
   </section>
