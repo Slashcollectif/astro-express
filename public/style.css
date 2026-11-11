@@ -69,3 +69,5 @@ input:focus{outline:2px solid var(--rose);outline-offset:1px}
 #aide-porte{text-align:center;margin:4px 0 -4px}
 .vers-slash{text-align:center;font-size:15px;line-height:1.5;margin:26px 0 8px}
 .vers-slash a{color:var(--brun);font-weight:800;text-decoration:underline;text-decoration-color:var(--rose);text-decoration-thickness:3px;text-underline-offset:4px}
+.cadeau{background:#fff;border:2px dashed var(--rose);border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.45;margin:2px 0 6px}
+.aide-haut{margin:2px 0 6px}
