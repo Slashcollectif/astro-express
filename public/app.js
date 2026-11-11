@@ -44,6 +44,7 @@
     $('#titre-saisie').textContent = lancement ? 'Teste ta future date de lancement' : 'Parle-moi de la naissance de ta boîte';
     $('#label-date').textContent = lancement ? 'La date dont tu rêves pour te lancer' : 'Date de naissance de ton entreprise';
     $('#intro-lancement').classList.toggle('cache', !lancement);
+    $('#aide-naissance').classList.toggle('cache', lancement);
     $('#date').max = lancement ? '2035-12-31' : new Date().toISOString().slice(0, 10);
   }
 
