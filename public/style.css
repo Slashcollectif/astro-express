@@ -67,3 +67,5 @@ input:focus{outline:2px solid var(--rose);outline-offset:1px}
 .carte p strong{font-weight:700;color:var(--brun);background:linear-gradient(transparent 62%,#FFD3FA 62%);padding:0 1px}
 .carte p .respire{display:block;height:10px}
 #aide-porte{text-align:center;margin:4px 0 -4px}
+.vers-slash{text-align:center;font-size:15px;line-height:1.5;margin:26px 0 8px}
+.vers-slash a{color:var(--brun);font-weight:800;text-decoration:underline;text-decoration-color:var(--rose);text-decoration-thickness:3px;text-underline-offset:4px}
