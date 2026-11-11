@@ -6,6 +6,20 @@
   const STRIPE_KEY = 'pk_live_51PsiLAJBDC82NqmfUJJBBe2TnGFx9KOmwjHjQaWhDO3Ziw31ndSpjhkoAH8E3ru0k9iTcBr3fyLw7GmGq5cxIUS6007OV4jSyy';
   const CIRCLE_SCRIPT = 'https://slash-collectif-1708fe.circle.so/external/form-embeds.js';
 
+  // Quand Circle redirige après l'envoi vers ?debloque=1, cette page s'ouvre
+  // DANS le cadre du formulaire : elle prévient l'outil, qui affiche la suite.
+  const parametres = new URLSearchParams(location.search);
+  if (parametres.has('debloque')) {
+    let parentOutil = false;
+    try { parentOutil = window.parent !== window && window.parent.location.origin === location.origin; } catch (e) { /* autre site */ }
+    if (parentOutil) {
+      window.parent.postMessage({ astro: 'debloque' }, location.origin);
+      document.body.innerHTML = '<p style="font:700 18px Montserrat,sans-serif;color:#3F231C;text-align:center;padding:30px 10px">C\'est noté ✨</p>';
+      document.body.style.background = '#fff';
+      return;
+    }
+  }
+
   const etat = {
     mode: 'boite', marque: '', activite: '', ville: null, villePerso: null,
     theme: null, lecture: null, deverrouille: false, email: '', prenom: '',
@@ -104,6 +118,7 @@
     try {
       etat.theme = await api('/api/theme', { date, time: heure, lat: etat.ville.lat, lon: etat.ville.lon, tz: etat.ville.tz });
       etat.lecture = await api('/api/lecture', { marque: etat.marque, activite: etat.activite, theme: etat.theme });
+      try { sessionStorage.setItem('astro', JSON.stringify({ marque: etat.marque, activite: etat.activite, mode: etat.mode, boite: etat.boite, ville: etat.ville, theme: etat.theme, lecture: etat.lecture })); } catch (x) { /* navigation privée */ }
       afficherResultat();
       aller('resultat');
     } catch (ex) {
@@ -173,33 +188,32 @@
       if (nom) etat.prenom = nom.value;
       setTimeout(deverrouiller, 1200);
     }, true);
-    // Le formulaire Circle est dans un cadre fermé : on ne voit pas l'envoi directement.
-    // 1) Si Circle prévient la page de l'envoi, on débloque tout seul.
+    // La suite s'affiche uniquement quand le formulaire est envoyé :
+    // - via la page de redirection ?debloque=1 (réglage du formulaire dans Circle)
+    // - ou si Circle prévient lui-même la page.
     window.addEventListener('message', (e) => {
+      if (e.origin === location.origin && e.data && e.data.astro === 'debloque') { deverrouiller(); return; }
       let hote = ''; try { hote = new URL(e.origin).hostname; } catch (x) { return; }
       if (!/circle\.so$/.test(hote)) return;
       const txt = typeof e.data === 'string' ? e.data : JSON.stringify(e.data || '');
       if (/submit|success|subscrib|thank|merci/i.test(txt)) setTimeout(deverrouiller, 1500);
     });
-    // 2) Après envoi, Circle remplace le formulaire par son message de remerciement :
-    //    le cadre change de taille. On guette ce changement une fois qu'elle a cliqué dedans.
-    let aClique = false, hauteurDepart = 0;
-    const montrerBouton = () => { $('#aide-porte').classList.remove('cache'); $('#secours-porte').classList.remove('cache'); };
-    window.addEventListener('blur', () => {
-      setTimeout(() => {
-        const f = document.activeElement;
-        if (!aClique && f && f.tagName === 'IFRAME' && $('#circle-form-zone').contains(f)) {
-          aClique = true; hauteurDepart = f.getBoundingClientRect().height;
-          new ResizeObserver(() => {
-            if (Math.abs(f.getBoundingClientRect().height - hauteurDepart) > 40) montrerBouton();
-          }).observe(f);
-          // 3) Filet de sécurité si la taille ne change pas : bouton 45 s après le 1er clic.
-          setTimeout(montrerBouton, 45000);
-        }
-      }, 0);
-    });
   }
   $('#secours-porte').addEventListener('click', deverrouiller);
+
+  if (parametres.has('debloque')) {
+    try {
+      const m = JSON.parse(sessionStorage.getItem('astro') || 'null');
+      if (m && m.lecture) {
+        Object.assign(etat, m, { deverrouille: true });
+        afficherResultat();
+        $('#porte').classList.add('cache'); $('#apres-porte').classList.remove('cache');
+        aller('resultat');
+        const carte2 = $$('#res-cartes .carte')[1];
+        if (carte2) setTimeout(() => carte2.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+      }
+    } catch (x) { /* rien à restaurer */ }
+  }
 
   /* ---------- story ---------- */
   $$('[data-story]').forEach((b) => b.addEventListener('click', async () => {
