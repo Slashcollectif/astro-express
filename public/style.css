@@ -71,3 +71,28 @@ input:focus{outline:2px solid var(--rose);outline-offset:1px}
 .vers-slash a{color:var(--brun);font-weight:800;text-decoration:underline;text-decoration-color:var(--rose);text-decoration-thickness:3px;text-underline-offset:4px}
 .cadeau{background:#fff;border:2px dashed var(--rose);border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.45;margin:2px 0 6px}
 .aide-haut{margin:2px 0 6px}
+
+.carte-cles{background:#fff;border:2px solid var(--rose);border-radius:24px;padding:22px}
+.carte-cles h2{margin:4px 0 12px}
+#res-cles{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;counter-reset:cle}
+#res-cles li{counter-increment:cle;display:grid;grid-template-columns:34px 1fr;gap:4px 10px;line-height:1.5;font-size:15px}
+#res-cles li::before{content:counter(cle);grid-row:span 2;width:30px;height:30px;border-radius:50%;background:var(--rose);color:var(--brun);font-weight:800;display:flex;align-items:center;justify-content:center}
+#res-cles b{font-weight:800}
+.garder{text-align:center;display:flex;flex-direction:column;gap:6px}
+.teaser{font-family:"DM Serif Display",serif;font-style:italic;font-size:21px;line-height:1.35;color:var(--brun);background:var(--peche);border-left:5px solid var(--orange);border-radius:12px;padding:14px 16px;margin:6px 0 10px}
+.teaser::before{content:"😱 ";font-style:normal}
+.sommaire{background:var(--creme);border:1.5px solid #E9D9CF;border-radius:14px;padding:16px 16px 12px;box-shadow:6px 6px 0 var(--rose);margin:6px 0 16px}
+.sommaire-titre{font-size:12px;font-weight:800;letter-spacing:3px;color:var(--orange-texte)}
+.sommaire ol{margin:10px 0 6px;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.45}
+.sommaire ol b{display:block;font-weight:800}
+.sommaire .option{font-size:13.5px;margin:8px 0 0;border-top:1px dashed #E2CFC3;padding-top:8px}
+.prix{text-align:center;font-weight:800;font-size:18px;margin:4px 0 10px}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  .ecran:not(#ecran-resultat),.retour,#porte,.guidance,.garder,.carte-story,#apres-story,.carte-vente,.vers-slash,canvas{display:none!important}
+  .carte,.carte-cles{break-inside:avoid;box-shadow:none}
+  .flou{filter:none!important}
+}
+.garder{margin:6px 0}
+.prix span{font-weight:500;font-size:14px}
