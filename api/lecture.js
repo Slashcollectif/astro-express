@@ -22,6 +22,14 @@ function decrireTheme(t) {
     const a = t.aspects.find((x) => (x.a === 'soleil' && x.b === cible) || (x.b === 'soleil' && x.a === cible));
     lignes.push(a ? `- Soleil en ${a.type} avec ${pos[cible].nom} (orbe ${a.orbe}°)` : `- Aucun aspect majeur entre le Soleil et ${pos[cible].nom}`);
   }
+  lignes.push('Pour le teaser seulement :');
+  for (const cle of ['lune', 'venus', 'mars', 'jupiter', 'saturne']) {
+    const p = pos[cle];
+    if (!p) continue;
+    let l = `- ${p.nom} en ${p.signe}`;
+    if (p.maison) l += `, maison ${p.maison}`;
+    lignes.push(l);
+  }
   if (t.heure_connue) {
     lignes.push(`- Ascendant en ${t.ascendant.signe}`);
     lignes.push(`- MC en ${t.mc.signe}`);
@@ -50,6 +58,7 @@ const OUTIL = {
       message: CARTE,
       difference: CARTE,
       mission: CARTE,
+      teaser: { type: 'string' },
       story: {
         type: 'object',
         properties: {
@@ -60,7 +69,7 @@ const OUTIL = {
         required: ['message', 'difference', 'mission'],
       },
     },
-    required: ['message', 'difference', 'mission', 'story'],
+    required: ['message', 'difference', 'mission', 'teaser', 'story'],
   },
 };
 
