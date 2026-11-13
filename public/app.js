@@ -2,7 +2,7 @@
 (() => {
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
-  const STRIPE_BUTTON_ID = 'buy_btn_1UZrpRJBDC82NqmfH7SZR9uY';
+  const STRIPE_BUTTON_ID = 'buy_btn_1UbNV4JBDC82Nqmf3rUYBixT';
   const STRIPE_KEY = 'pk_live_51PsiLAJBDC82NqmfUJJBBe2TnGFx9KOmwjHjQaWhDO3Ziw31ndSpjhkoAH8E3ru0k9iTcBr3fyLw7GmGq5cxIUS6007OV4jSyy';
   const CIRCLE_SCRIPT = 'https://slash-collectif-1708fe.circle.so/external/form-embeds.js';
 
@@ -119,7 +119,7 @@
     try {
       etat.theme = await api('/api/theme', { date, time: heure, lat: etat.ville.lat, lon: etat.ville.lon, tz: etat.ville.tz });
       etat.lecture = await api('/api/lecture', { marque: etat.marque, activite: etat.activite, theme: etat.theme });
-      try { sessionStorage.setItem('astro', JSON.stringify({ marque: etat.marque, activite: etat.activite, mode: etat.mode, boite: etat.boite, ville: etat.ville, theme: etat.theme, lecture: etat.lecture })); } catch (x) { /* navigation privée */ }
+      sauver();
       afficherResultat();
       aller('resultat');
     } catch (ex) {
@@ -141,6 +141,23 @@
     return h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').trim().replace(/\s*\n\s*\n?\s*/g, '<span class="respire"></span>');
   }
 
+  // La lecture est gardée dans le navigateur pour pouvoir la retrouver plus tard.
+  function sauver() {
+    const m = JSON.stringify({ marque: etat.marque, activite: etat.activite, mode: etat.mode, boite: etat.boite, ville: etat.ville, theme: etat.theme, lecture: etat.lecture, deverrouille: etat.deverrouille });
+    try { sessionStorage.setItem('astro', m); } catch (x) { /* navigation privée */ }
+    try { localStorage.setItem('astro-express', m); } catch (x) { /* navigation privée */ }
+  }
+  let derniere = null;
+  try { derniere = JSON.parse(localStorage.getItem('astro-express') || 'null'); } catch (x) { /* rien */ }
+  if (derniere && derniere.lecture && derniere.theme) $('#retrouver').classList.remove('cache');
+  $('#retrouver').addEventListener('click', () => {
+    Object.assign(etat, derniere);
+    afficherResultat();
+    if (etat.deverrouille) { $('#porte').classList.add('cache'); $('#apres-porte').classList.remove('cache'); }
+    aller('resultat');
+  });
+  $('#garder').addEventListener('click', () => window.print());
+
   function afficherResultat() {
     const t = etat.theme, l = etat.lecture;
     $('#res-marque').textContent = etat.marque || (etat.mode === 'lancement' ? 'Ta future boîte' : 'Ta boîte');
@@ -159,11 +176,14 @@
         <p>${miseEnForme(debut)} <span class="${verrou ? 'flou' : ''}" ${verrou ? 'aria-hidden="true"' : ''}>${/^\s*\n/.test(suite) ? '<span class="respire"></span>' : ''}${miseEnForme(suite)}</span></p>
         <span class="mot ${verrou ? 'flou' : ''}">${esc(sansEtoiles(c.mot_fort))}</span></article>`;
     }).join('');
+    $('#res-teaser').textContent = sansEtoiles(l.teaser || '');
+    $('#res-teaser').classList.toggle('cache', !l.teaser);
   }
 
   function deverrouiller() {
     if (etat.deverrouille) return;
     etat.deverrouille = true;
+    sauver();
     afficherResultat();
     $('#porte').classList.add('cache');
     $('#apres-porte').classList.remove('cache');
