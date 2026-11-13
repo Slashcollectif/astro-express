@@ -18,7 +18,7 @@
     <div class="logo"><span>SLASH</span> <span class="rose">collectif</span></div>
     <img class="soleil-accueil" src="/assets/soleil-accueil.svg" alt="" width="240" height="240">
     <span class="pastille">Astro Express · offert</span>
-    <h1>Découvre ce que ton thème astral a à dire sur ta boîte.</h1>
+    <h1>Ton thème astral a des trucs à dire sur ta boîte.</h1>
     <ol class="promesses">
       <li><b>01</b> Le sujet sur lequel concentrer ta comm pour qu'on ne voie que toi.</li>
       <li><b>02</b> Ta vraie différence, celle qui fait de toi l'évidence.</li>
@@ -27,6 +27,7 @@
     <p class="cadeau">🎁 <b>En bonus :</b> ton thème en visuel, prêt à poster en story ou à garder en fond d'écran.</p>
     <button class="bouton" data-aller="saisie" data-mode="boite">Je veux mon astro express offert</button>
     <button class="lien" data-aller="saisie" data-mode="lancement">Je n'ai pas encore d'entreprise<br><i>(tester une date de lancement)</i></button>
+    <button id="retrouver" class="lien cache" type="button">↺ Retrouver ma dernière lecture</button>
     <p class="vers-slash"><a href="https://slash-collectif-1708fe.circle.so/linkree-slashinsta" target="_top">← Retour aux liens Slash</a></p>
   </section>
 
@@ -89,6 +90,11 @@
     <p class="guidance">C'est une guidance, pas une science exacte : même un placement qui frotte fait partie de ton chemin.</p>
 
     <div id="apres-porte" class="cache">
+      <div class="garder">
+        <button id="garder" class="bouton secondaire" type="button">Je garde ma lecture en PDF</button>
+        <p class="petit">Elle reste aussi dans ton navigateur : reviens sur cette page pour la retrouver.</p>
+      </div>
+
       <div class="carte-story">
         <h2>Ta story, prête à partager</h2>
         <p>Ton thème complet en visuel, pour ta story ou ton fond d'écran.</p>
@@ -106,15 +112,21 @@
 
       <div class="carte-vente">
         <h2>Commande ton thème complet</h2>
-        <p>Ton Astro Business complet, c'est :</p>
-        <ul>
-          <li>Le wording qui fait dire « c'est pour moi » à ta cliente de cœur</li>
-          <li>Ta clientèle cible : qui elle est, la blessure qu'elle porte, ce qu'elle attend de toi</li>
-          <li>Tes couleurs, tes matières, ton style qui portent la vibration de ta boîte</li>
-          <li>Tes actions clés et tes axes stratégiques</li>
-          <li>Le lien avec ton thème personnel, vos complémentarités</li>
-          <li>Et 45 min avec moi pour poser ton plan d'action immédiat</li>
-        </ul>
+        <p id="res-teaser" class="teaser cache"></p>
+        <p>Dans ton Astro Business complet, on va beaucoup plus loin. Voilà ce que tu reçois :</p>
+        <div class="sommaire">
+          <span class="sommaire-titre">TON DOSSIER · SOMMAIRE</span>
+          <ol>
+            <li><b>Ta cliente de cœur</b> qui elle est, la blessure qu'elle porte, ce qu'elle attend de toi</li>
+            <li><b>Ton wording</b> les mots qui lui font dire « c'est pour moi »</li>
+            <li><b>Ton univers</b> les couleurs, les matières et le style qui portent la vibration de ta boîte</li>
+            <li><b>Ta stratégie</b> tes actions clés et tes axes prioritaires</li>
+            <li><b>Toi + ta boîte</b> le lien avec ton thème perso, vos complémentarités</li>
+            <li><b>Ton plan d'action</b> par où commencer, concrètement</li>
+          </ol>
+          <p class="option">En option au moment du paiement : une séance avec moi pour poser ton plan ensemble.</p>
+        </div>
+        <p class="prix">88 € · ton dossier PDF complet<br><span>ou en 3 fois sans frais avec Klarna</span></p>
         <button class="bouton" data-aller="commande">Go pour une stratégie alignée ✨</button>
       </div>
     </div>
@@ -143,11 +155,11 @@
       <div class="aide"><b>Ton heure, tu la trouves où ?</b> Sur ton acte de naissance (demande-le en ligne à ta mairie de naissance), ton livret de famille, ou demande à ta maman.</div>
       <label class="case"><input id="cmd-sans-heure" type="checkbox"> Je ne connais pas mon heure de naissance</label>
       <p id="erreur-commande" class="erreur cache" role="alert"></p>
-      <button class="bouton" type="submit">Je passe au paiement · 244 € TTC</button>
-      <p class="petit">Payable en plusieurs fois avec Klarna · paiement sécurisé par Stripe</p>
+      <button class="bouton" type="submit">Je passe au paiement · 88 €</button>
+      <p class="petit">Payable en 3 fois sans frais avec Klarna · paiement sécurisé par Stripe · la séance avec moi s'ajoute en option sur la page de paiement</p>
     </form>
     <div id="zone-paiement" class="cache">
-      <p><b>C'est noté, merci !</b> Plus qu'une étape : le paiement. Ton rendez-vous de 45 min arrive avec ton PDF.</p>
+      <p><b>C'est noté, merci !</b> Plus qu'une étape : le paiement. Tu peux y ajouter la séance avec moi. Ton dossier PDF arrive ensuite dans ta boîte mail, et si tu as pris la séance, ton lien de rendez-vous avec.</p>
       <div id="stripe-zone"></div>
     </div>
   </section>
