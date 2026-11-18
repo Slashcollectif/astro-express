@@ -124,7 +124,7 @@
       aller('resultat');
     } catch (ex) {
       aller('saisie');
-      err.textContent = "Oups, la lecture n'a pas pu se faire. (" + ex.message + ")";
+      err.textContent = / 429 : /.test(ex.message) ? ex.message.split(' 429 : ')[1] : "Oups, la lecture n'a pas pu se faire. (" + ex.message + ")";
       err.classList.remove('cache');
       console.error(ex);
     }
